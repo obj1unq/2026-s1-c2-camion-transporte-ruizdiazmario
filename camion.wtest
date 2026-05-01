@@ -1,0 +1,83 @@
+import cosas.*
+import camion.*
+
+describe "Camión - núcleo" {
+
+	test "cargar y descargar cosas" {
+		camion.vaciar()
+
+		camion.cargar(bumblebee)
+		assert.that(camion.cosasCargadas().contains(bumblebee))
+		assert.equals(1, camion.cosasCargadas().size())
+
+		camion.cargar(knightRider)
+		assert.that(camion.cosasCargadas().contains(bumblebee))
+		assert.that(camion.cosasCargadas().contains(knightRider))
+		assert.equals(2, camion.cosasCargadas().size())
+
+		camion.descargar(bumblebee)
+		assert.that(!camion.cosasCargadas().contains(bumblebee))
+		assert.equals(1, camion.cosasCargadas().size())
+	}
+
+	test "todo peso es par" {
+		camion.vaciar()
+
+		bumblebee.estaTransformado(true)
+		arenaAGranel.pesoActual(50)
+
+		camion.cargar(bumblebee)
+		camion.cargar(arenaAGranel)
+
+		assert.that(camion.todoPesoEsPar())
+	}
+
+	test "hay algo que pesa una cantidad dada" {
+		camion.vaciar()
+
+		arenaAGranel.pesoActual(50)
+
+		camion.cargar(bumblebee)
+		camion.cargar(arenaAGranel)
+
+		assert.that(camion.hayAlgoQuePesa(50))
+		assert.that(camion.hayAlgoQuePesa(800))
+		assert.that(!camion.hayAlgoQuePesa(500))
+	}
+
+	test "peso total y excedido" {
+		camion.vaciar()
+
+		paqueteDeLadrillos.cantidadDeLadrillos(300)
+
+		camion.cargar(bumblebee)
+		camion.cargar(paqueteDeLadrillos)
+
+		assert.equals(2400, camion.pesoTotal())
+		assert.that(!camion.estaExcedido())
+	}
+
+	test "buscar por peligrosidad" {
+		camion.vaciar()
+
+		camion.cargar(bumblebee)
+		camion.cargar(bateriaAntiaerea)
+		camion.cargar(residuosRadiactivos)
+
+		assert.equals(bateriaAntiaerea, camion.cosaConPeligrosidad(0))
+		assert.equals(bumblebee, camion.cosaConPeligrosidad(15))
+		assert.equals(residuosRadiactivos, camion.cosaConPeligrosidad(200))
+	}
+
+	test "puede circular en ruta" {
+		camion.vaciar()
+
+		bumblebee.estaTransformado(true)
+		paqueteDeLadrillos.cantidadDeLadrillos(300)
+
+		camion.cargar(bumblebee)
+		camion.cargar(paqueteDeLadrillos)
+
+		assert.that(camion.puedeCircular(20))
+	}
+}

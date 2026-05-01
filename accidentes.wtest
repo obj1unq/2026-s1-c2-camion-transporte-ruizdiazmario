@@ -1,0 +1,58 @@
+import cosas.*
+import camion.*
+
+describe "Accidentes" {
+
+	test "caso 1" {
+
+		camion.vaciar()
+
+		contenedorPortuario.vaciar()
+		bumblebee.estaTransformado(true)
+		contenedorPortuario.agregar(knightRider)
+		contenedorPortuario.agregar(bumblebee)
+
+		residuosRadiactivos.pesoActual(30)
+		embalajeDeSeguridad.envolver(residuosRadiactivos)
+
+		arenaAGranel.pesoActual(50)
+		paqueteDeLadrillos.cantidadDeLadrillos(100)
+		bateriaAntiaerea.tieneMisiles(true)
+
+		camion.cargar(contenedorPortuario)
+		camion.cargar(embalajeDeSeguridad)
+		camion.cargar(arenaAGranel)
+		camion.cargar(paqueteDeLadrillos)
+		camion.cargar(bateriaAntiaerea)
+
+		camion.accidentarse()
+
+		assert.that(!bumblebee.estaTransformado())
+		assert.equals(30, residuosRadiactivos.peso())
+		assert.equals(70, arenaAGranel.peso())
+		assert.equals(88, paqueteDeLadrillos.cantidadDeLadrillos())
+		assert.that(!bateriaAntiaerea.tieneMisiles())
+	}
+
+	test "caso 2" {
+
+		camion.vaciar()
+
+		bumblebee.estaTransformado(false)
+		residuosRadiactivos.pesoActual(30)
+		paqueteDeLadrillos.cantidadDeLadrillos(10)
+		bateriaAntiaerea.tieneMisiles(false)
+
+		camion.cargar(bumblebee)
+		camion.cargar(residuosRadiactivos)
+		camion.cargar(paqueteDeLadrillos)
+		camion.cargar(bateriaAntiaerea)
+
+		camion.accidentarse()
+
+		assert.that(bumblebee.estaTransformado())
+		assert.equals(45, residuosRadiactivos.peso())
+		assert.equals(0, paqueteDeLadrillos.cantidadDeLadrillos())
+		assert.that(!bateriaAntiaerea.tieneMisiles())
+	}
+}
