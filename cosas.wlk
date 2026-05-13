@@ -185,7 +185,15 @@ object contenedorPortuario {
 	}
 
 	method peso() {
-		return 100 + cosas.sum { cosa => cosa.peso() }
+		return self.pesoBase() + self.pesoDeCosas()
+	}
+
+	method pesoDeCosas() {
+		return cosas.sum { cosa => cosa.peso() }
+	}
+
+	method pesoBase() {
+		return 100
 	}
 
 	method nivelPeligrosidad() {
@@ -206,7 +214,7 @@ object contenedorPortuario {
 }
 
 object embalajeDeSeguridad {
-	var cosa = null
+	var cosa = knightRider
 
 	method envolver(unaCosa) {
 		cosa = unaCosa

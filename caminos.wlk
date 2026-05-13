@@ -1,14 +1,15 @@
 object ruta9 {
 
 	method puedeTransitar(camion) {
-		return camion.puedeCircular(20)
+		const nivelMaximoPermitido = 20
+		return camion.puedeCircular(nivelMaximoPermitido)
 	}
 }
 
 object caminosVecinales {
 	var maxPeso = 0
 
-	method configurarMaximo(unPeso) {
+	method maxPeso(unPeso) {
 		maxPeso = unPeso
 	}
 

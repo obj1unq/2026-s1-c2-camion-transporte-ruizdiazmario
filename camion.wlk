@@ -9,23 +9,28 @@ object camion {
 	}	
 
 	method cargar(unaCosa) {
-		if (!cosas.contains(unaCosa)) {
-			cosas.add(unaCosa)
+	if (!self.yaEstaCargada(unaCosa)) {
+		cosas.add(unaCosa)
 		}
+	}
+
+	method yaEstaCargada(unaCosa) {
+		return cosas.contains(unaCosa)
 	}
 
 	method descargar(unaCosa) {
-		if (cosas.contains(unaCosa)) {
-			cosas.remove(unaCosa)
+		if (!cosas.contains(unaCosa)) {
+			self.error("No se puede descargar una ya que no está en el camión")
 		}
+		cosas.remove(unaCosa)
 	}
 
-	method cosasCargadas() {
+	method cosas() {
 		return cosas
 	}
 
 	method todoPesoEsPar() {
-		return cosas.all { cosa => cosa.peso() % 2 == 0 }
+		return cosas.all { cosa => cosa.peso().even() }
 	}
 
 	method hayAlgoQuePesa(unPeso) {
@@ -44,8 +49,12 @@ object camion {
 		return self.tara() + self.pesoDeLaCarga()
 	}
 
+	method pesoMaximo() {
+		return 2500
+	}
+
 	method estaExcedido() {
-		return self.pesoTotal() > 2500
+		return self.pesoTotal() > self.pesoMaximo()
 	}
 
 	method cosaConPeligrosidad(nivel) {
@@ -62,11 +71,15 @@ object camion {
 
 	method puedeCircular(nivelMaximo) {
 		return !self.estaExcedido() &&
-			cosas.all { cosa => cosa.nivelPeligrosidad() <= nivelMaximo }
+			self.tieneAlgunaCosaPermitida(nivelMaximo)
+	}
+
+	method tieneAlgunaCosaPermitida(nivelMaximo) {
+		return cosas.any { cosa => cosa.nivelPeligrosidad() <= nivelMaximo }
 	}
 
 	method hayAlgoEntre(min, max) {
-	return cosas.any { cosa => cosa.peso() >= min && cosa.peso() <= max }
+		return cosas.any { cosa => cosa.peso().between(min, max) }
 	}
 
 	method cosaMasPesada() {

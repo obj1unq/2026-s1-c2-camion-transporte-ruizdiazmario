@@ -17,7 +17,7 @@ describe "Bultos" {
 		assert.equals(6, camion.totalBultos())
 	}
 
-	test "caso 1" {
+	test "bultos con cosas simples: bumblebee, ladrillos y batería" {
 
 		camion.vaciar()
 
@@ -41,7 +41,7 @@ describe "Bultos" {
 		assert.equals(9, camion.totalBultos())
 	}
 
-	test "caso 2" {
+	test "bultos con contenedor portuario, embalaje y mezcla de cargas" {
 
 		camion.vaciar()
 
@@ -55,7 +55,7 @@ describe "Bultos" {
 		assert.equals(5, camion.totalBultos())
 	}
 
-	test "caso 3" {
+	test "bultos con ladrillos pesados y arena a granel" {
 
 		camion.vaciar()
 

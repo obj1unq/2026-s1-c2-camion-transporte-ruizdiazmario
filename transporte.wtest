@@ -22,7 +22,7 @@ describe "Transporte" {
 		camion.transportar(almacen, ruta9)
 
 		assert.equals(#{knightRider, residuosRadiactivos, bumblebee, arenaAGranel}, almacen.cosas())
-		assert.equals(#{}, camion.cosasCargadas())
+		assert.equals(#{}, camion.cosas())
 	}
 
 	test "ruta 9 fallido por peligrosidad" {
@@ -42,7 +42,7 @@ describe "Transporte" {
 		camion.transportar(almacen, ruta9)
 
 		assert.equals(#{knightRider, residuosRadiactivos}, almacen.cosas())
-		assert.equals(#{bumblebee, arenaAGranel}, camion.cosasCargadas())
+		assert.equals(#{bumblebee, arenaAGranel}, camion.cosas())
 	}
 
 	test "ruta 9 fallido por exceso de peso" {
@@ -62,7 +62,7 @@ describe "Transporte" {
 		camion.transportar(almacen, ruta9)
 
 		assert.equals(#{knightRider, residuosRadiactivos}, almacen.cosas())
-		assert.equals(#{bumblebee, arenaAGranel}, camion.cosasCargadas())
+		assert.equals(#{bumblebee, arenaAGranel}, camion.cosas())
 	}
 
 	test "caminos vecinales exitoso" {
@@ -70,7 +70,7 @@ describe "Transporte" {
 		camion.vaciar()
 		almacen.cosas().clear()
 
-		caminosVecinales.configurarMaximo(2000)
+		caminosVecinales.maxPeso(2000)
 
 		almacen.agregar(knightRider)
 		almacen.agregar(residuosRadiactivos)
@@ -84,7 +84,7 @@ describe "Transporte" {
 		camion.transportar(almacen, caminosVecinales)
 
 		assert.equals(#{knightRider, residuosRadiactivos, bumblebee, arenaAGranel}, almacen.cosas())
-		assert.equals(#{}, camion.cosasCargadas())
+		assert.equals(#{}, camion.cosas())
 	}
 
 	test "caminos vecinales fallido" {
@@ -92,7 +92,7 @@ describe "Transporte" {
 		camion.vaciar()
 		almacen.cosas().clear()
 
-		caminosVecinales.configurarMaximo(300)
+		caminosVecinales.maxPeso(300)
 
 		almacen.agregar(knightRider)
 		almacen.agregar(residuosRadiactivos)
@@ -106,6 +106,6 @@ describe "Transporte" {
 		camion.transportar(almacen, caminosVecinales)
 
 		assert.equals(#{knightRider, residuosRadiactivos}, almacen.cosas())
-		assert.equals(#{bumblebee, arenaAGranel}, camion.cosasCargadas())
+		assert.equals(#{bumblebee, arenaAGranel}, camion.cosas())
 	}
 }
