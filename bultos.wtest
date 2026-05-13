@@ -1,0 +1,70 @@
+import cosas.*
+import camion.*
+
+describe "Bultos" {
+
+	test "total de bultos simple" {
+
+		camion.vaciar()
+
+		paqueteDeLadrillos.cantidadDeLadrillos(300)
+		bateriaAntiaerea.tieneMisiles(true)
+
+		camion.cargar(bumblebee)
+		camion.cargar(paqueteDeLadrillos)
+		camion.cargar(bateriaAntiaerea)
+
+		assert.equals(6, camion.totalBultos())
+	}
+
+	test "bultos con cosas simples: bumblebee, ladrillos y batería" {
+
+		camion.vaciar()
+
+		contenedorPortuario.vaciar()
+		contenedorPortuario.agregar(knightRider)
+		contenedorPortuario.agregar(bumblebee)
+
+		residuosRadiactivos.pesoActual(100)
+		embalajeDeSeguridad.envolver(residuosRadiactivos)
+
+		arenaAGranel.pesoActual(50)
+		paqueteDeLadrillos.cantidadDeLadrillos(50)
+		bateriaAntiaerea.tieneMisiles(false)
+
+		camion.cargar(contenedorPortuario)
+		camion.cargar(embalajeDeSeguridad)
+		camion.cargar(arenaAGranel)
+		camion.cargar(paqueteDeLadrillos)
+		camion.cargar(bateriaAntiaerea)
+
+		assert.equals(9, camion.totalBultos())
+	}
+
+	test "bultos con contenedor portuario, embalaje y mezcla de cargas" {
+
+		camion.vaciar()
+
+		paqueteDeLadrillos.cantidadDeLadrillos(150)
+		bateriaAntiaerea.tieneMisiles(true)
+
+		camion.cargar(paqueteDeLadrillos)
+		camion.cargar(bateriaAntiaerea)
+		camion.cargar(contenedorPortuario)
+
+		assert.equals(5, camion.totalBultos())
+	}
+
+	test "bultos con ladrillos pesados y arena a granel" {
+
+		camion.vaciar()
+
+		paqueteDeLadrillos.cantidadDeLadrillos(350)
+		arenaAGranel.pesoActual(50)
+
+		camion.cargar(paqueteDeLadrillos)
+		camion.cargar(arenaAGranel)
+
+		assert.equals(4, camion.totalBultos())
+	}
+}
